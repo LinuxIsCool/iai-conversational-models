@@ -16,7 +16,7 @@ The image ships with the client/runtime libraries for these models:
 
 | Model | Role | Library | Notes |
 |---|---|---|---|
-| OpenAI Whisper large-v3-turbo | Fast ASR | `faster-whisper` | Legion default for transcription |
+| OpenAI Whisper large-v3-turbo | Fast ASR | `faster-whisper` | Default fast ASR |
 | NVIDIA Parakeet | Top-leaderboard ASR | `nemo_toolkit[asr]` | RNNT + TDT variants |
 | NVIDIA Canary | Multilingual ASR + translation | `nemo_toolkit[asr]` | 4-language |
 | NVIDIA Riva (client) | Full speech suite (ASR/TTS/diarization) | `nvidia-riva-client` | Connects to Riva server |
@@ -56,7 +56,7 @@ the next notebook redeploy in the TELUS console.
 ```bash
 cd /mnt/data-24tb/docker-builds/legion-jupyter-ai
 docker buildx build \
-  --builder legion-builder \
+  --builder iai-builder \
   --platform linux/amd64 \
   --cache-from type=local,src=/mnt/data-24tb/buildkit-cache \
   --cache-to type=local,dest=/mnt/data-24tb/buildkit-cache,mode=max \

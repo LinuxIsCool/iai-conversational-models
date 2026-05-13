@@ -13,7 +13,7 @@ TAG="${1:-latest}"
 DATESTAMP="$(date +%Y%m%d)"
 SHA="$(git rev-parse --short HEAD 2>/dev/null || echo nogit)"
 
-BUILDER=legion-builder
+BUILDER=iai-builder
 docker buildx inspect "$BUILDER" >/dev/null 2>&1 || \
   docker buildx create --name "$BUILDER" --driver docker-container --bootstrap
 

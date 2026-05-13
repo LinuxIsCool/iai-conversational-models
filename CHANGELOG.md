@@ -41,7 +41,7 @@ this project follows [SemVer](https://semver.org/) with MAJOR.MINOR semantics:
 - Default CMD: `jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root`
 - Exposed ports: 8888 (JupyterLab), 8000 (FastAPI), 7860 (Gradio)
 - Image labels: title, description, source, vendor, licenses,
-  legion.purpose, legion.target-tenant, legion.version
+  com.indigenomics.purpose, com.indigenomics.tenant, com.indigenomics.version
 
 ### Notes
 - Tagged: `:latest`, `:v0.1`, `:20260513`
