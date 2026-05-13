@@ -1,58 +1,79 @@
-# Roshan handoff — Indigenomics AI custom notebook image
+# Roshan handoff — Indigenomics AI custom notebook image (v0.1)
 
-**Date built:** 2026-05-13
+**Date:** 2026-05-13
 **For:** Roshan (TELUS AI Factory)
 **Pattern:** Apr 27 sync — public image stitched into Indigenomics custom service profile
 
-## Image
+## Image (live now)
 
 ```
 ghcr.io/linuxiscool/iai-conversational-models:latest
+ghcr.io/linuxiscool/iai-conversational-models:v0.1
 ghcr.io/linuxiscool/iai-conversational-models:20260513
 ```
 
-Public package on GitHub Container Registry. Pullable anonymously:
+Manifest sha: `sha256:40f11432a18ece7ae8635d80dd00d91b165b2c5a355036479eebc265ffff7f40`
+
+Pull (anonymous, once visibility flipped public):
 
 ```bash
 docker pull ghcr.io/linuxiscool/iai-conversational-models:latest
 ```
 
-## What is in the image
+## Source repository
 
-Built on `pytorch/pytorch:2.5.1-cuda12.4-cudnn9-devel` (public Docker Hub).
-The TELUS AI Factory custom profile can swap to `nvcr.io/nvidia/pytorch:24.10-py3`
-on Roshan's side if preferred — the layer stack is portable.
+https://github.com/LinuxIsCool/iai-conversational-models
+
+Public repo. Dockerfile, examples, scripts, changelog, CI all visible.
+
+CI: `.github/workflows/build-push.yml` rebuilds on every push to main →
+auto-tags `:latest`, `:YYYYMMDD`, `:sha-<sha>` + optional manual tag.
+
+Nightly anonymous-pull regression smoke at 03:00 PDT.
+
+## What is in v0.1
+
+Built on `pytorch/pytorch:2.5.1-cuda12.4-cudnn9-devel` (Docker Hub public,
+swap to `nvcr.io/nvidia/pytorch` on your side if preferred — layer stack
+above is portable).
 
 | Layer | Versions |
 |---|---|
 | Base | PyTorch 2.5.1 + CUDA 12.4 + cuDNN 9 + Python 3.11 + Ubuntu 22.04 |
-| System | ffmpeg, libsndfile1, sox, git-lfs, jq |
-| ASR | faster-whisper >=1.0.3, openai-whisper, whisperx |
-| NeMo | nemo_toolkit[asr] >=2.0.0 (Parakeet + Canary access) |
+| System | ffmpeg, libsndfile1, sox, libsox-fmt-all, git-lfs, jq |
+| ASR | faster-whisper >=1.0.3, openai-whisper |
 | Riva | nvidia-riva-client >=2.16.0 |
-| PersonaPlex | `git+https://github.com/NVIDIA/personaplex@main` |
-| LLM | transformers >=4.45, huggingface_hub, accelerate, datasets |
-| Web | fastapi, uvicorn[standard], gradio, httpx, openai, anthropic |
-| Jupyter | jupyterlab >=4.2, ipywidgets, jupyterlab-git, jupyter-archive |
+| HF / LLM | transformers >=4.45, huggingface_hub, accelerate |
+| Web | fastapi, uvicorn[standard], gradio, httpx, openai |
+| Jupyter | jupyterlab >=4.2, ipywidgets, jupyterlab-git |
 
-## Seed notebooks shipped
+## v0.2 plan (next push, this week)
 
-`/workspace/examples/`
+Deferred from v0.1 due to Legion-side disk constraints (now resolved):
+
+| Add | For |
+|---|---|
+| `nemo_toolkit[asr]>=2.0` | `nvidia/parakeet-tdt-1.1b-v2` (top open ASR), `nvidia/canary-1b` (multilingual + translation) |
+| `git+https://github.com/NVIDIA/personaplex@main` | Full-duplex conversational AI (`nvidia/personaplex-7b-v1`) |
+
+## Seed notebooks shipped (`/workspace/examples/`)
 
 1. `01-whisper-turbo.ipynb` — faster-whisper large-v3-turbo, file → transcript
-2. `02-parakeet.ipynb` — `nvidia/parakeet-tdt-1.1b-v2`, top open-ASR leaderboard
-3. `03-canary.ipynb` — `nvidia/canary-1b`, 4-language ASR + translation
-4. `04-riva-client.ipynb` — Riva ASR + TTS client (talks to deployed Riva server)
-5. `05-personaplex.ipynb` — `nvidia/personaplex-7b-v1` full-duplex conversational AI
+2. `02-parakeet.ipynb` — placeholder (NeMo lib lands in v0.2)
+3. `03-canary.ipynb` — placeholder (NeMo lib lands in v0.2)
+4. `04-riva-client.ipynb` — Riva ASR + TTS client, talks to deployed Riva server (set `RIVA_URI` env)
+5. `05-personaplex.ipynb` — placeholder (PersonaPlex lib lands in v0.2)
 
-Weights are NOT baked into the image. Each notebook pulls weights from
-Hugging Face Hub at runtime.
+Weights NOT baked into image. Each notebook pulls from HuggingFace Hub at runtime.
 
 ## Built-in diagnostic
 
-The image ships with `/usr/local/bin/iai-doctor`. Runs at container start.
-Reports GPU presence, CUDA/PyTorch versions, model-lib versions, endpoint
-hints.
+```bash
+docker run --rm --gpus all ghcr.io/linuxiscool/iai-conversational-models:latest iai-doctor
+```
+
+Reports: GPU presence, CUDA/PyTorch versions, installed model libs,
+endpoint hints. Runs automatically on container start.
 
 ## Container ports
 
@@ -62,38 +83,27 @@ hints.
 | 8000 | FastAPI template for model endpoints |
 | 7860 | Gradio demo |
 
-## Iteration loop with Roshan
+## Iteration loop (what we agreed Apr 27)
 
-When changes are needed:
+```
+Legion edit → git push → GH Actions buildx push → ghcr.io:latest updated
+  → TELUS profile redeploy picks up latest → notebook spawns with new image
+```
 
-1. Edit `Dockerfile` here.
-2. Re-run the buildx push (cache is on data-24tb, fast incremental).
-3. Roshan redeploys the notebook profile → latest image picked up automatically.
+End-to-end: <20 min for a notebook-only change, <30 min for a new pip dep.
 
-This is the exact loop Roshan described on 2026-04-27:
+When changes needed: edit the Dockerfile or notebooks, commit + push,
+Roshan redeploys the profile when ready. No manual handshake unless the
+change is breaking.
 
-> "If something is not working, you have to contact me and then I have a
-> few debug … that can be saved. If you want, we can give that a try."
+## Vision + roadmap
 
-The image now belongs to Indigenomics / LinuxIsCool. Roshan stitches it into
-a custom profile under the Indigenomics tenant. Modify-image → redeploy =
-fastest possible iteration cycle on the TELUS AI Factory.
+Full doc: `task-485 - iai-conversational-models-image-system.md` in
+Legion's backlog. 11 sections, 9 phases (Phase 0 today → Phase 8
+engagement extension Q4 2026). Public excerpt available on request.
 
-## Source
+## Provenance
 
-Build sources live at `/mnt/data-24tb/docker-builds/legion-jupyter-ai/` on the
-Legion machine. Will be promoted into the `legion-plugins` repo as a published
-artifact once Roshan confirms the profile is wired.
-
-## Why these models
-
-- **Whisper turbo** — Legion's existing transcription default; performance baseline
-- **Parakeet** — current open-leaderboard top ASR; comparison anchor vs Whisper turbo
-- **Canary** — multilingual ASR + translation, useful for IndigenomicsAI multilingual outreach
-- **Riva** — full speech stack including TTS; voice surface for IAI Gateway demos
-- **PersonaPlex** — full-duplex conversational AI; the model that finally lets a TELUS-sovereign IAI conversational agent feel natural — selectable voice + role + interrupt-aware
-
-PersonaPlex is the strategic centerpiece. A sovereign Indigenous conversational
-agent — Elder voice, Indigenomics Tutor role, real-time turn-taking, no
-ASR→LLM→TTS cascade — is now technically reachable on TELUS infrastructure
-the moment Roshan's custom profile mounts this image.
+- 2026-04-27 sync: Roshan proved the pattern via `roshanrajx64/pytorch-ffmpeg-notebook`
+- 2026-05-13: First Indigenomics image built ahead of Wed Roshan sync
+- Image owned by `LinuxIsCool` (Longtail Financial Corp.) on behalf of Indigenomics AI
