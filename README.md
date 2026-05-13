@@ -54,7 +54,7 @@ the next notebook redeploy in the TELUS console.
 ## Build
 
 ```bash
-cd /mnt/data-24tb/docker-builds/legion-jupyter-ai
+cd ~/iai-conversational-models
 docker buildx build \
   --builder iai-builder \
   --platform linux/amd64 \
