@@ -45,8 +45,8 @@ this project follows [SemVer](https://semver.org/) with MAJOR.MINOR semantics:
 
 ### Notes
 - Tagged: `:latest`, `:v0.1`, `:20260513`
-- Built via `docker buildx` (legion-builder, docker-container driver)
-  from Legion at 2026-05-13
+- Built via 'docker buildx' (buildx, docker-container driver)
+  from local build host at 2026-05-13
 - v0.1 deferred NeMo + PersonaPlex layers due to Legion-side disk
   pressure; resolved in Phase 1 (relocate docker data-root to
   data-24tb) before v0.2

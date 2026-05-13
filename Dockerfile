@@ -10,11 +10,11 @@ FROM ${BASE_IMAGE}
 LABEL org.opencontainers.image.title="IAI Conversational Models v0.1"
 LABEL org.opencontainers.image.description="Jupyter notebook image curated for Indigenomics AI conversational + speech model experiments. v0.1: Whisper turbo + Riva client."
 LABEL org.opencontainers.image.source="https://github.com/LinuxIsCool/iai-conversational-models"
-LABEL org.opencontainers.image.vendor="Longtail Financial Corp."
+LABEL org.opencontainers.image.vendor="Indigenomics AI"
 LABEL org.opencontainers.image.licenses="Apache-2.0"
-LABEL legion.purpose="telus-ai-factory-custom-profile"
-LABEL legion.target-tenant="indigenomics-ai"
-LABEL legion.version="0.1"
+LABEL com.indigenomics.purpose="telus-ai-factory-custom-profile"
+LABEL com.indigenomics.tenant="indigenomics-ai"
+LABEL com.indigenomics.version="0.1"
 
 ENV DEBIAN_FRONTEND=noninteractive \
     PIP_DISABLE_PIP_VERSION_CHECK=1 \

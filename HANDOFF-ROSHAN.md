@@ -1,4 +1,4 @@
-# Roshan handoff — Indigenomics AI custom notebook image (v0.1)
+# Handoff — Indigenomics AI custom notebook image (v0.1)
 
 **Date:** 2026-05-13
 **For:** Roshan (TELUS AI Factory)
@@ -14,7 +14,7 @@ ghcr.io/linuxiscool/iai-conversational-models:20260513
 
 Manifest sha: `sha256:40f11432a18ece7ae8635d80dd00d91b165b2c5a355036479eebc265ffff7f40`
 
-Pull (anonymous, once visibility flipped public):
+Pull (anonymous, public):
 
 ```bash
 docker pull ghcr.io/linuxiscool/iai-conversational-models:latest
@@ -49,7 +49,7 @@ above is portable).
 
 ## v0.2 plan (next push, this week)
 
-Deferred from v0.1 due to Legion-side disk constraints (now resolved):
+Deferred from v0.1 due to local build constraints (now resolved):
 
 | Add | For |
 |---|---|
@@ -86,7 +86,7 @@ endpoint hints. Runs automatically on container start.
 ## Iteration loop (what we agreed Apr 27)
 
 ```
-Legion edit → git push → GH Actions buildx push → ghcr.io:latest updated
+Indigenomics edit → git push → GH Actions buildx push → ghcr.io:latest updated
   → TELUS profile redeploy picks up latest → notebook spawns with new image
 ```
 
@@ -96,14 +96,8 @@ When changes needed: edit the Dockerfile or notebooks, commit + push,
 Roshan redeploys the profile when ready. No manual handshake unless the
 change is breaking.
 
-## Vision + roadmap
-
-Full doc: `task-485 - iai-conversational-models-image-system.md` in
-Legion's backlog. 11 sections, 9 phases (Phase 0 today → Phase 8
-engagement extension Q4 2026). Public excerpt available on request.
-
 ## Provenance
 
 - 2026-04-27 sync: Roshan proved the pattern via `roshanrajx64/pytorch-ffmpeg-notebook`
 - 2026-05-13: First Indigenomics image built ahead of Wed Roshan sync
-- Image owned by `LinuxIsCool` (Longtail Financial Corp.) on behalf of Indigenomics AI
+- Image maintained by Indigenomics AI
