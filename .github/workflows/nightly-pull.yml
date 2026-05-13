@@ -1,0 +1,31 @@
+name: nightly-pull-smoke
+
+on:
+  schedule:
+    - cron: '0 10 * * *'  # 03:00 PDT == 10:00 UTC
+  workflow_dispatch:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Anonymous pull
+        id: pull
+        continue-on-error: true
+        run: |
+          docker pull ghcr.io/linuxiscool/iai-conversational-models:latest
+
+      - name: Open issue on failure
+        if: steps.pull.outcome == 'failure'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Nightly pull smoke failed — ${new Date().toISOString().slice(0,10)}`,
+              body: `Anonymous \`docker pull ghcr.io/linuxiscool/iai-conversational-models:latest\` failed in the nightly smoke. Likely cause: package visibility regressed to private. Flip back via package settings → Danger Zone.`,
+              labels: ['regression','visibility']
+            })
