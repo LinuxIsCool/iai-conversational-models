@@ -47,7 +47,7 @@ this project follows [SemVer](https://semver.org/) with MAJOR.MINOR semantics:
 - Tagged: `:latest`, `:v0.1`, `:20260513`
 - Built via 'docker buildx' (buildx, docker-container driver)
   from local build host at 2026-05-13
-- v0.1 deferred NeMo + PersonaPlex layers due to Legion-side disk
+- v0.1 deferred NeMo + PersonaPlex layers due to local build host disk
   pressure; resolved in Phase 1 (relocate docker data-root to
   data-24tb) before v0.2
 - HANDOFF: `HANDOFF-ROSHAN.md`
