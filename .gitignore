@@ -1,0 +1,19 @@
+# Build artifacts
+build*.log
+.buildx-cache/
+**/.ipynb_checkpoints/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Local data
+data/
+models/
+samples/*.wav
+samples/*.mp3
+samples/*.m4a
+!samples/README.md
+
+# OS
+.DS_Store
+Thumbs.db
