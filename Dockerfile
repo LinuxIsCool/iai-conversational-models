@@ -9,7 +9,7 @@ FROM ${BASE_IMAGE}
 
 LABEL org.opencontainers.image.title="IAI Conversational Models v0.1"
 LABEL org.opencontainers.image.description="Jupyter notebook image curated for Indigenomics AI conversational + speech model experiments. v0.1: Whisper turbo + Riva client."
-LABEL org.opencontainers.image.source="https://github.com/LinuxIsCool/legion-plugins"
+LABEL org.opencontainers.image.source="https://github.com/LinuxIsCool/iai-conversational-models"
 LABEL org.opencontainers.image.vendor="Longtail Financial Corp."
 LABEL org.opencontainers.image.licenses="Apache-2.0"
 LABEL legion.purpose="telus-ai-factory-custom-profile"
