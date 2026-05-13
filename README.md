@@ -58,8 +58,8 @@ cd ~/iai-conversational-models
 docker buildx build \
   --builder iai-builder \
   --platform linux/amd64 \
-  --cache-from type=local,src=/mnt/data-24tb/buildkit-cache \
-  --cache-to type=local,dest=/mnt/data-24tb/buildkit-cache,mode=max \
+  --cache-from type=local,src=./.buildx-cache \
+  --cache-to type=local,dest=./.buildx-cache,mode=max \
   --push \
   -t ghcr.io/linuxiscool/iai-conversational-models:latest \
   -t ghcr.io/linuxiscool/iai-conversational-models:$(date +%Y%m%d) \
