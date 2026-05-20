@@ -6,17 +6,29 @@
 
 ## Image (live now)
 
+**Primary — Docker Hub (per Roshan 2026-05-14):**
+
+```
+docker.io/gaiaai/iai-conversational-models:latest
+docker.io/gaiaai/iai-conversational-models:v0.1
+docker.io/gaiaai/iai-conversational-models:20260513
+```
+
+**Mirror — GHCR:**
+
 ```
 ghcr.io/linuxiscool/iai-conversational-models:latest
 ghcr.io/linuxiscool/iai-conversational-models:v0.1
 ghcr.io/linuxiscool/iai-conversational-models:20260513
 ```
 
-Manifest sha: `sha256:40f11432a18ece7ae8635d80dd00d91b165b2c5a355036479eebc265ffff7f40`
+Manifest sha: `sha256:40f11432a18ece7ae8635d80dd00d91b165b2c5a355036479eebc265ffff7f40` (identical across both registries)
 
 Pull (anonymous, public):
 
 ```bash
+docker pull docker.io/gaiaai/iai-conversational-models:latest
+# or
 docker pull ghcr.io/linuxiscool/iai-conversational-models:latest
 ```
 
